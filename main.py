@@ -101,31 +101,3 @@ elif menu == "Textes de Loi":
 
 import plotly.express as px # Ajoutez 'plotly' à votre requirements.txt
 
-# --- NOUVEAU MODULE : DASHBOARD ---
-elif menu == "Tableau de Bord":
-    st.header("📈 Analyse des Performances Sanitaires")
-    
-    # Simulation de données historiques (À remplacer par une base de données réelle type SQLite ou Google Sheets)
-    data = {
-        "Date": [datetime.date(2025, 10, 15), datetime.date(2025, 11, 20), 
-                 datetime.date(2025, 12, 10), datetime.date(2026, 1, 15), 
-                 datetime.date(2026, 2, 28), datetime.date.today()],
-        "Score": [65, 72, 80, 78, 92, score_final if 'score_final' in locals() else 92]
-    }
-    df = pd.DataFrame(data)
-
-    col1, col2 = st.columns([2, 1])
-    
-    with col1:
-        st.subheader("Évolution de la conformité (%)")
-        fig = px.line(df, x="Date", y="Score", markers=True, 
-                     title="Progression du Plan de Maîtrise Sanitaire",
-                     color_discrete_sequence=["#1E3A8A"])
-        fig.update_layout(yaxis_range=[0, 105])
-        st.plotly_chart(fig, use_container_width=True)
-
-    with col2:
-        st.subheader("Statistiques Clés")
-        st.metric("Score Moyen", f"{df['Score'].mean():.1f}%", "+5%")
-        st.metric("Dernier Audit", f"{df['Score'].iloc[-1]}%", "Satisfaisant")
-        st.info("🎯 Objectif DDPP : Maintenir un score > 85% pour le label 'Très Satisfaisant'.")
